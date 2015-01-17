@@ -1,0 +1,96 @@
+#include <stdio.h>
+#include <log.h>
+#include "LuaContext.hpp"
+
+LuaContext::LuaContext()
+{
+	//luaContext = lua_open(); // #define lua_open()	luaL_newstate()
+	luaContext = luaL_newstate(); // 创建一个解释器句柄
+
+	luaL_openlibs(luaContext); // 打开所有的Lua库
+	info("lua runtime environment opened");
+}
+
+LuaContext::~LuaContext()
+{
+	lua_close(luaContext); // 关闭句柄
+	info("lua runtime environment close");
+}
+
+void LuaContext::registerFunction(const char* name, LUAGLUEFUNCTION function)
+{
+	//lua_pushcfunction(luaContext, function);
+	//lua_setglobal(luaContext, name);
+
+	lua_register(luaContext, name, function);
+	debug("LuaGlue function %s registered", name);
+}
+
+void LuaContext::load(const char* file) throw (LuaException)
+{
+	int error = luaL_loadfile(luaContext, file); // 调入Lua脚本文件
+	if (error != 0)
+	{
+		const char *message = NULL;
+		if (error == LUA_ERRFILE)
+		{
+			message = "Cannot open and read the file";
+		}
+		throw LuaException(error, message);
+	}
+	info("Loaded lua file %s, result %d", file, error);
+}
+
+void LuaContext::execute(const char* file) throw (LuaException)
+{
+	load(file);
+	int error = lua_pcall(luaContext, 0, 0, 0); //执行Lua脚本
+	if (error != 0)
+	{
+		const char *message = NULL;
+		if (error == LUA_ERRRUN)
+		{
+			message = "a runtime error.";
+		}
+		else if (error == LUA_ERRMEM)
+		{
+			message = "memory allocation error. For such errors, Lua does not call the error handler function.";
+		}
+		else if (error == LUA_ERRERR)
+		{
+			message = "error while running the error handler function.";
+		}
+		throw LuaException(error, message);
+	}
+	info("Executed lua file %s, result %d", file, error);
+}
+
+void LuaContext::dexecute(const char* file) throw (LuaException)
+{
+	int error = luaL_dofile(luaContext, file);
+	if (error != 0)
+	{
+		const char *message = NULL;
+		throw LuaException(error, message);
+	}
+	info("Executed lua file %s directly, result %d", file, error);
+}
+
+const char* LuaContext::getStringArgument(int n)
+{
+	return luaL_checkstring(luaContext, n);
+}
+
+/**
+ *
+ * int luaL_checkint (lua_State *L, int narg);
+ */
+int LuaContext::getIntArgument(int n)
+{
+	return luaL_checkint(luaContext, n);
+}
+
+lua_State * LuaContext::getLuaContext()
+{
+	return luaContext;
+}

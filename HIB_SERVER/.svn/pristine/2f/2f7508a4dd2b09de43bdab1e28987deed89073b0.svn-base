@@ -1,0 +1,30 @@
+#include <stdlib.h>
+#include "InstanceBarrier.hpp"
+
+InstanceBarrier::InstanceBarrier(int idx, char* name, int level, int instance_idx) : AbstractLinkedBarrier(NULL)
+{
+    this->idx = idx;
+	this->name = name;
+	this->level = level;
+	this->instance = instance_idx;
+}
+
+int InstanceBarrier::getIdx()
+{
+	return this->idx;
+}
+
+char* InstanceBarrier::getName()
+{
+	return this->name;
+}
+
+int InstanceBarrier::getLevel()
+{
+	return this->level;
+}
+
+int InstanceBarrier::getInstance()
+{
+	return this->instance;
+}

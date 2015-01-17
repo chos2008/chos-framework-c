@@ -1,0 +1,41 @@
+DEBUG=../Debug
+PATH_VS=D:\usr\bin\Microsoft Visual Studio\VC98
+CL="$(PATH_VS)\Bin\cl.exe"
+LINK="$(PATH_VS)\Bin\link.exe"
+
+INCLUDE="D:\usr\bin\Microsoft Visual Studio\VC98\Include"
+LIB="D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+
+INCLUDE_LIB_LOG=D:\home\admin\workstation\c\liblog
+LIB_LIB_LOG=D:\home\admin\workstation\c\liblog\Debug
+
+INCLUDE_MYSQL=D:\usr\srv\mysql51\include
+LIB_MYSQL=D:\usr\srv\mysql51\lib\debug
+
+
+liblog.lib: clean
+	$(CL) /GX /W3 /I $(INCLUDE) /c /Fo$(DEBUG)/ ../SQLException.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../Mysql.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../Connection.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../MysqlConnection.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../MysqlStatement.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../MysqlResultSet.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../Mysql.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ MysqlTest.cpp
+#	$(CL) /GX /W3 /I $(INCLUDE) /c StdAfx.cpp
+#	$(CL) /GX /W3 /I $(INCLUDE) /c *.cpp
+#	$(CL) /GX /W3 /I $(INCLUDE) /c /Fo$(DEBUG)/ *.cpp
+
+#	lib /nologo log.obj /out:./liblog.lib 
+	$(LINK) /LIBPATH:$(LIB) /LIBPATH:$(LIB_LIB_LOG) /LIBPATH:$(LIB_MYSQL) /OUT:$(DEBUG)/MysqlTest.exe $(DEBUG)/*.obj
+#	$(LINK) /DLL /LIBPATH:$(LIB) /OUT:$(DEBUG)/liblog.dll *.obj
+#	$(LINK) /DLL /LIBPATH:$(LIB) /OUT:$(DEBUG)/liblog.dll $(DEBUG)/*.obj
+# $(LINK) *.obj /LIBPATH:"D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+	cp ../liblog.dll $(DEBUG)/
+
+clean:
+	rm -Rf ./*.bak
+	rm -Rf ./*.o
+	rm -Rf ./*.obj
+	rm -Rf ./*.exe
+	rm -Rf ../Debug/*

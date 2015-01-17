@@ -1,0 +1,33 @@
+DEBUG=../Debug
+PATH_VS=D:\usr\bin\Microsoft Visual Studio\VC98
+CL="$(PATH_VS)\Bin\cl.exe"
+LINK="$(PATH_VS)\Bin\link.exe"
+
+INCLUDE="D:\usr\bin\Microsoft Visual Studio\VC98\Include"
+LIB="D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+
+INCLUDE_LIB_LOG=D:\home\admin\workstation\c\liblog
+LIB_LIB_LOG=D:\home\admin\workstation\c\liblog\Debug
+
+
+INCLUDE_MYSQL=D:\usr\srv\mysql51\include
+LIB_MYSQL=D:\usr\srv\mysql51\lib\debug
+
+INCLUDE_LUA=D:\usr\bin\Lua\5.1\include
+LIB_LUA=D:\usr\bin\Lua\5.1\lib
+
+
+liblog.lib: clean 
+ 
+# using compiler linking options /MT, If compiles _beginthread edition of Thread
+	$(CL) /GX /W3 /MT /DGLOBAL_START_ROUTINE /D_MT_RT_EX /I $(INCLUDE) /I $(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../Thread.cpp
+	$(CL) /GX /W3 /MT /DGLOBAL_START_ROUTINE /D_MT_RT_EX /I $(INCLUDE) /c /Fo$(DEBUG)/ ThreadTest__beginthreadex.cpp
+
+	$(LINK) /LIBPATH:$(LIB) /LIBPATH:$(LIB_LIB_LOG) /LIBPATH:$(LIB_MYSQL) /LIBPATH:$(LIB_LUA) /OUT:$(DEBUG)/ThreadTest__beginthread.exe $(DEBUG)/*.obj
+	cp ../liblog.dll $(DEBUG)
+clean:
+	rm -Rf ./*.bak
+	rm -Rf ./*.o
+	rm -Rf ./*.obj
+	rm -Rf ./*.exe
+	rm -Rf ../Debug/*

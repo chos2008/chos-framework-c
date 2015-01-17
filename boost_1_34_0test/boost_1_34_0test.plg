@@ -1,0 +1,39 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: boost_1_34_0test - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP393.tmp" with contents
+[
+kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /nologo /subsystem:console /incremental:yes /pdb:"Debug/boost_1_34_0test.pdb" /debug /machine:I386 /out:"Debug/boost_1_34_0test.exe" /pdbtype:sept 
+.\Debug\demo_xml.obj
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP393.tmp"
+<h3>Output Window</h3>
+Linking...
+libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj) : warning LNK4078: multiple ".CRT" sections found with different attributes (40301040)
+libcpmtd.lib(ios.obj) : error LNK2005: "public: void __thiscall std::ios_base::clear(int,bool)" (?clear@ios_base@std@@QAEXH_N@Z) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(ios.obj) : error LNK2005: "public: class std::locale __thiscall std::ios_base::imbue(class std::locale const &)" (?imbue@ios_base@std@@QAE?AVlocale@2@ABV32@@Z) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(ios.obj) : error LNK2005: "private: void __thiscall std::ios_base::_Callfns(enum std::ios_base::event)" (?_Callfns@ios_base@std@@AAEXW4event@12@@Z) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(locale0.obj) : error LNK2005: "public: static unsigned int const std::ctype<char>::table_size" (?table_size@?$ctype@D@std@@2IB) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "private: __thiscall std::locale::_Locimp::_Locimp(class std::locale::_Locimp const &)" (??0_Locimp@locale@std@@AAE@ABV012@@Z) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "private: void __thiscall std::locale::_Locimp::_Addfac(class std::locale::facet *,unsigned int)" (?_Addfac@_Locimp@locale@std@@AAEXPAVfacet@23@I@Z) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "public: __thiscall std::_Locinfo::_Locinfo(char const *)" (??0_Locinfo@std@@QAE@PBD@Z) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "public: __thiscall std::_Locinfo::~_Locinfo(void)" (??1_Locinfo@std@@QAE@XZ) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_woarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "public: static class std::locale::id std::num_put<char,class std::ostreambuf_iterator<char,struct std::char_traits<char> > >::id" (?id@?$num_put@DV?$ostreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_oarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "public: static class std::locale::id std::numpunct<char>::id" (?id@?$numpunct@D@std@@2V0locale@2@A) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(xml_oarchive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "public: static class std::locale::id std::num_get<char,class std::istreambuf_iterator<char,struct std::char_traits<char> > >::id" (?id@?$num_get@DV?$istreambuf_iterator@DU?$char_traits@D@std@@@std@@@std@@2V0locale@2@A) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(basic_text_iprimitive.obj)
+libcpmtd.lib(locale.obj) : error LNK2005: "public: static class std::locale::id std::codecvt<char,char,int>::id" (?id@?$codecvt@DDH@std@@2V0locale@2@A) already defined in libboost_serialization-vc6-mt-sgd-1_34.lib(basic_text_iprimitive.obj)
+LINK : fatal error LNK1104: cannot open file "libboost_serialization-vc80-mt-sgd-1_34.lib"
+Ö´ÐÐ link.exe Ê±³ö´í.
+
+
+
+<h3>Results</h3>
+boost_1_34_0test.exe - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

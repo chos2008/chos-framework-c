@@ -1,0 +1,25 @@
+DEBUG=../Debug
+PATH_VS=D:\usr\bin\Microsoft Visual Studio\VC98
+CL="$(PATH_VS)\Bin\cl.exe"
+LINK="$(PATH_VS)\Bin\link.exe"
+
+INCLUDE="D:\usr\bin\Microsoft Visual Studio\VC98\Include"
+LIB="D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+INCLUDE_LIB_LOG=D:\home\admin\workstation\c\liblog
+LIB_LIB_LOG=D:\home\admin\workstation\c\liblog\Debug
+
+
+
+liblog.lib: clean 
+ 
+# using compiler linking options /MT, If compiles _beginthread edition of Thread
+	$(CL) /GX /W3 /MT /I $(INCLUDE) /c /Fo$(DEBUG)/ ThreadTest__beginthreadex.cpp
+
+	$(LINK) /LIBPATH:$(LIB) /OUT:$(DEBUG)/Thread_beginthreadTest.exe $(DEBUG)/*.obj
+
+clean:
+	rm -Rf ./*.bak
+	rm -Rf ./*.o
+	rm -Rf ./*.obj
+	rm -Rf ./*.exe
+	rm -Rf ../Debug/*

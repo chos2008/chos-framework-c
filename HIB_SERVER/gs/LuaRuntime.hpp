@@ -1,0 +1,65 @@
+/*
+ * LuaRuntime provides a run time environment for c and cplusplus to integrate 
+ * between c or cplusplus and lua. 
+ * <p>
+ * LuaRuntime acts as runtime environment to provides lua runtime context which 
+ * handles lua state, register LuaGlue function to provides a way to call c or 
+ * cplusplus function between lua to c or cplusplus, lua function simple call and 
+ * based-event model between c or cplusplus and lua
+ * <p>
+ * See LuaContext.hpp to checkout Lua runtime context for details.
+ * <p>
+ * Note: For programing, the destroying of lua runtime is option, in other words, 
+ * it is not necessory to destroy lua runtime explicitly.
+ * 
+ * @author ada
+ * @version 1.0
+ */
+#include <map>
+#include "LuaContext.hpp"
+
+#if ! defined LUA_RUNTIME
+#define LUA_RUNTIME
+class LuaRuntime
+{
+	private: 
+		int dump;
+
+		LuaContext* luaContext;
+
+		std::map<void *, const char *> oc;
+
+	private:
+
+		LuaRuntime();
+
+		void destroyLuaContext();
+
+	public:
+
+		~LuaRuntime();
+
+		static LuaRuntime* instance();
+
+		/**
+		 * For programing, the destroying of lua runtime is option.
+		 */
+		void destroy();
+
+		LuaContext& getContext();
+
+		void load(const char* file);
+
+		void execute(const char* file);
+
+		void dexecute(const char* file);
+
+		void registerFunction(const char* name, LUAGLUEFUNCTION function);
+
+		void registerEventFunction(const char* name, LUAGLUEFUNCTION function);
+		
+		void registerClass(const char* name, void *obj, size_t size);
+
+		const char* getLuaObject(void *obj);
+};
+#endif

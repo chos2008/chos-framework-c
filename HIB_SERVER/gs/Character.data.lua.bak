@@ -1,0 +1,29 @@
+-- 人物配置数据
+print("人物配置数据")
+
+--[[
+-- 人物配置包括游戏中内部的人物角色以及玩家可获得的人物角色
+-- 对于游戏中内部的人物角色以及玩家可获得的人物角色，这里没有什么猛将、统帅、术士、策士的细分
+
+人物ID，名称，物理攻击，物理防御，统帅（血量），智力，品质，性别，描述
+--]]
+
+lua_create_character(1, "蔡邕", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(2, "曹节", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(3, "张让", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(4, "赵忠", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(5, "封谞", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(6, "段珪", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(7, "侯览", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(8, "蹇硕", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(9, "程旷", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(10, "夏惲", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(11, "郭胜", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(12, "刘备", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(13, "关羽", 50, 40, 20, 30, 1, 1, "")
+lua_create_character(14, "张飞", 50, 40, 15,  5, 1, 1, "")
+lua_create_character(15, "张角", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(16, "张宝", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(17, "张梁", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(18, "刘备", 20, 20, 30, 50, 1, 1, "")
+lua_create_character(19, "貂蝉", 0,   1,  0, 20, 1, 1, "")

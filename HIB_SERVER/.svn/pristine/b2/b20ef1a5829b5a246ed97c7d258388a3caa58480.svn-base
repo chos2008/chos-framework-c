@@ -1,0 +1,53 @@
+/*
+ *
+ *
+ * @author ada
+ * @version 1.0
+ * @since 1.0
+ */
+#include <windows.h>
+#include "Runnable.hpp"
+
+#if ! defined THREAD
+#define THREAD
+
+#define GLOBAL_START_ROUTINE
+
+#if defined GLOBAL_START_ROUTINE 
+#define _GLOBAL_START_ROUTINE 
+
+DWORD __stdcall execute(LPVOID args);
+
+#endif
+
+/**
+ *
+ *
+ *
+ */
+class /*TK_API*/ Thread : public Runnable 
+{
+
+private:
+
+	DWORD threadID;
+
+	Runnable *target;
+
+public:
+
+	Thread();
+
+	Thread(const Runnable *runnable);
+
+#if ! defined _GLOBAL_START_ROUTINE
+	DWORD execute(LPVOID args);
+#endif
+	
+	void start();
+
+	virtual void run();
+
+};
+
+#endif

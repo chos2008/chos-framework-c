@@ -1,0 +1,24 @@
+#ifndef HERO
+#define HERO
+
+class Hero 
+{
+private:
+
+public:
+
+	
+};
+#endif
+
+#ifndef GENERALS
+#define GENERALS
+class Generals 
+{
+private:
+
+public:
+
+
+};
+#endif

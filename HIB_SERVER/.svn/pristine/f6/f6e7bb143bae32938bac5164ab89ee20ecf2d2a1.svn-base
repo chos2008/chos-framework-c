@@ -1,0 +1,74 @@
+/*
+ *
+ *
+ * @AUTHOR ADA
+ * @VERSION 1.0
+ * @SINCE 1.0
+ */
+#include <stdio.h>
+#include <stdlib.h>
+#include <string>
+#include <windows.h>
+#include <log.h>
+#include "Thread.hpp"
+//#define _MT
+using namespace std;
+
+#if ! defined _GLOBAL_START_ROUTINE
+DWORD __stdcall Thread::execute(LPVOID args)
+{
+	Thread* t = (Thread *) args;
+    t->run();
+	return 1;
+}
+#else
+DWORD execute(LPVOID args) 
+{
+	Thread* t = (Thread *) args;
+    t->run();
+	return 1;
+}
+#endif
+
+/**
+ *
+ *
+ *
+ */
+Thread::Thread() 
+{
+    this->threadID = 0;
+	this->target = NULL;
+}
+
+Thread::Thread(const Runnable *runnable)
+{
+	this->threadID = 0;
+	this->target = (Runnable *) runnable;
+}
+
+void Thread::start() 
+{
+#ifndef _GLOBAL_START_ROUTINE
+	LPTHREAD_START_ROUTINE startRoutine = (LPTHREAD_START_ROUTINE) Thread::execute;
+	printf("GLOBAL_START_ROUTINE not defined, do not using global thread start routine\n");
+#else
+	LPTHREAD_START_ROUTINE startRoutine = (LPTHREAD_START_ROUTINE) execute;
+	printf("GLOBAL_START_ROUTINE defined, using global thread start routine\n");
+#endif
+	::CreateThread(NULL, 0, startRoutine, (LPVOID) this, 0, &(this->threadID));
+
+	debug("Thread %d started", this->threadID);
+}
+
+void Thread::run() 
+{
+	if (target != NULL) 
+	{
+	    target->run();
+	}
+	else 
+	{
+		debug("Thread::run()");
+	}
+}

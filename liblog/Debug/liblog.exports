@@ -1,0 +1,116 @@
+
+Dump of file liblog.dll
+
+File Type: DLL
+
+  Section contains the following exports for liblog.dll
+
+           0 characteristics
+    532D35FB time date stamp Sat Mar 22 15:04:27 2014
+        0.00 version
+           1 ordinal base
+          92 number of functions
+          92 number of names
+
+    ordinal hint RVA      name
+
+          1    0 00001172 ??0Appender@@QAE@ABV0@@Z
+          2    1 00001154 ??0Appender@@QAE@PAU_iobuf@@@Z
+          3    2 0000107D ??0Appender@@QAE@XZ
+          4    3 0000112C ??0AsynchronizedAppender@@QAE@ABV0@@Z
+          5    4 0000104B ??0AsynchronizedAppender@@QAE@PADH@Z
+          6    5 00001096 ??0FileAppender@@QAE@ABV0@@Z
+          7    6 00001145 ??0FileAppender@@QAE@PAU_iobuf@@@Z
+          8    7 000010FF ??0FileAppender@@QAE@PBD@Z
+          9    8 00001131 ??0GenericAppender@@QAE@ABV0@@Z
+         10    9 000010B4 ??0GenericAppender@@QAE@PADH@Z
+         11    A 00001177 ??0Logger@@QAE@ABV0@@Z
+         12    B 000010FA ??0Logger@@QAE@XZ
+         13    C 000010AA ??0LoggerWrapper@@QAE@ABV0@@Z
+         14    D 00001190 ??0LoggerWrapper@@QAE@XZ
+         15    E 000011B8 ??0SocketAppender@@QAE@ABV0@@Z
+         16    F 0000115E ??0SocketAppender@@QAE@PADH@Z
+         17   10 0000119A ??0StandardAppender@@QAE@ABV0@@Z
+         18   11 0000105F ??0StandardAppender@@QAE@XZ
+         19   12 000010C8 ??1Appender@@QAE@XZ
+         20   13 00001113 ??1AsynchronizedAppender@@QAE@XZ
+         21   14 00001091 ??1FileAppender@@QAE@XZ
+         22   15 0000102D ??1GenericAppender@@QAE@XZ
+         23   16 00001023 ??1LoggerWrapper@@QAE@XZ
+         24   17 000010D2 ??1SocketAppender@@QAE@XZ
+         25   18 000011B3 ??1StandardAppender@@QAE@XZ
+         26   19 000010F5 ??4Appender@@QAEAAV0@ABV0@@Z
+         27   1A 000010D7 ??4AsynchronizedAppender@@QAEAAV0@ABV0@@Z
+         28   1B 00001087 ??4FileAppender@@QAEAAV0@ABV0@@Z
+         29   1C 00001136 ??4GenericAppender@@QAEAAV0@ABV0@@Z
+         30   1D 0000108C ??4Logger@@QAEAAV0@ABV0@@Z
+         31   1E 00001104 ??4LoggerWrapper@@QAEAAV0@ABV0@@Z
+         32   1F 00001037 ??4SocketAppender@@QAEAAV0@ABV0@@Z
+         33   20 0000100A ??4StandardAppender@@QAEAAV0@ABV0@@Z
+         34   21 0003201C ??_7Appender@@6B@
+         35   22 00032038 ??_7AsynchronizedAppender@@6B@
+         36   23 00032054 ??_7FileAppender@@6B@
+         37   24 00032074 ??_7GenericAppender@@6B@
+         38   25 00032148 ??_7Logger@@6B@
+         39   26 00032164 ??_7LoggerWrapper@@6B@
+         40   27 00032090 ??_7SocketAppender@@6B@
+         41   28 000320AC ??_7StandardAppender@@6B@
+         42   29 0000114A ?debug@AsynchronizedAppender@@UAAXPBDZZ
+         43   2A 00001159 ?debug@FileAppender@@UAAXPBDZZ
+         44   2B 000010CD ?debug@GenericAppender@@UAAXPBDZZ
+         45   2C 00001055 ?debug@LoggerWrapper@@UAAXPBDZZ
+         46   2D 00001073 ?debug@SocketAppender@@UAAXPBDZZ
+         47   2E 00001186 ?debug@StandardAppender@@UAAXPBDZZ
+         48   2F 000010EB ?error@AsynchronizedAppender@@UAAXPBDZZ
+         49   30 00001109 ?error@FileAppender@@UAAXPBDZZ
+         50   31 00001046 ?error@GenericAppender@@UAAXPBDZZ
+         51   32 0000117C ?error@LoggerWrapper@@UAAXPBDZZ
+         52   33 0000106E ?error@SocketAppender@@UAAXPBDZZ
+         53   34 00001195 ?error@StandardAppender@@UAAXPBDZZ
+         54   35 00001181 ?fatal@AsynchronizedAppender@@UAAXPBDZZ
+         55   36 00001050 ?fatal@FileAppender@@UAAXPBDZZ
+         56   37 00001163 ?fatal@GenericAppender@@UAAXPBDZZ
+         57   38 000010BE ?fatal@LoggerWrapper@@UAAXPBDZZ
+         58   39 00001118 ?fatal@SocketAppender@@UAAXPBDZZ
+         59   3A 000010A5 ?fatal@StandardAppender@@UAAXPBDZZ
+         60   3B 00001140 ?info@AsynchronizedAppender@@UAAXPBDZZ
+         61   3C 000010A0 ?info@FileAppender@@UAAXPBDZZ
+         62   3D 000011AE ?info@GenericAppender@@UAAXPBDZZ
+         63   3E 00001005 ?info@LoggerWrapper@@UAAXPBDZZ
+         64   3F 0000110E ?info@SocketAppender@@UAAXPBDZZ
+         65   40 00001122 ?info@StandardAppender@@UAAXPBDZZ
+         66   41 0000116D ?log@AsynchronizedAppender@@UAAXPBD0ZZ
+         67   42 00001168 ?log@FileAppender@@UAAXPBD0ZZ
+         68   43 00001014 ?log@GenericAppender@@UAAXPBD0ZZ
+         69   44 000010AF ?log@LoggerWrapper@@UAAXPBD0ZZ
+         70   45 00001032 ?log@SocketAppender@@UAAXPBD0ZZ
+         71   46 00001127 ?log@StandardAppender@@UAAXPBD0ZZ
+         72   47 0000113B ?warn@AsynchronizedAppender@@UAAXPBDZZ
+         73   48 00001064 ?warn@FileAppender@@UAAXPBDZZ
+         74   49 000011A9 ?warn@GenericAppender@@UAAXPBDZZ
+         75   4A 000011A4 ?warn@LoggerWrapper@@UAAXPBDZZ
+         76   4B 0000101E ?warn@SocketAppender@@UAAXPBDZZ
+         77   4C 000010E6 ?warn@StandardAppender@@UAAXPBDZZ
+         78   4D 00001069 __dateformat
+         79   4E 00001019 __log
+         80   4F 000010C3 dateformat
+         81   50 0000100F debug
+         82   51 0000103C error
+         83   52 00001028 fatal
+         84   53 0000119F info
+         85   54 0000111D log
+         86   55 00001041 logdate
+         87   56 00001082 logdebug
+         88   57 000010F0 logerror
+         89   58 0000109B logfatal
+         90   59 000010DC loginfo
+         91   5A 000010E1 logwarn
+         92   5B 0000114F warn
+
+  Summary
+
+        7000 .data
+        1000 .idata
+        4000 .rdata
+        2000 .reloc
+       31000 .text

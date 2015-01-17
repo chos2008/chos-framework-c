@@ -1,0 +1,4 @@
+Release: 
+	g++ -c ../linux/ServerSocket.cpp -o ServerSocket.o
+	g++ -c ServerSocketTest.cpp -o ServerSocketTest.o
+	g++ -o ServerSocketTest ServerSocketTest.o ServerSocket.o

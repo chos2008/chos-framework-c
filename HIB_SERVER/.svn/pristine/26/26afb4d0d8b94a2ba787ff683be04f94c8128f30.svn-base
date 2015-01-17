@@ -1,0 +1,56 @@
+#include <stdio.h>
+#include <log.h>
+#include "LuaContext.hpp"
+
+LuaContext::LuaContext()
+{
+	//luaContext = lua_open(); // #define lua_open()	luaL_newstate()
+	luaContext = luaL_newstate(); // 创建一个解释器句柄
+
+	luaL_openlibs(luaContext); // 打开所有的Lua库
+	info("lua runtime environment opened");
+}
+
+LuaContext::~LuaContext()
+{
+	lua_close(luaContext); // 关闭句柄
+	info("lua runtime environment close");
+}
+
+void LuaContext::registerFunction(const char* name, LUAGLUEFUNCTION function)
+{
+	//lua_pushcfunction(luaContext, function);
+	//lua_setglobal(luaContext, name);
+
+	lua_register(luaContext, name, function);
+	debug("LuaGlue function %s registered", name);
+}
+
+void LuaContext::load(const char* file)
+{
+	luaL_loadfile(luaContext, file); // 调入Lua脚本文件
+	info("Loaded lua file %s", file);
+}
+
+void LuaContext::execute(const char* file)
+{
+	load(file);
+	lua_pcall(luaContext, 0, 0, 0); //执行Lua脚本
+	info("Executed lua file %s", file);
+}
+
+void LuaContext::dexecute(const char* file)
+{
+	luaL_dofile(luaContext, file);
+	info("Executed lua file %s directly", file);
+}
+
+const char* LuaContext::getStringArgument(int n)
+{
+	return luaL_checkstring(luaContext, n);
+}
+
+lua_State * LuaContext::getLuaContext()
+{
+	return luaContext;
+}

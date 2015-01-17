@@ -1,0 +1,90 @@
+/*
+ *
+ *
+ * @author ada
+ * @version 1.0
+ * @since 1.0
+ */
+#include <log.h>
+#include "../LuaRuntime.hpp"
+#include "../Task.hpp"
+#include "../../LinkedLibrary.h"
+
+LuaRuntime *runtime = NULL;
+
+int lua_create_task(struct lua_State *L)
+{
+	LuaContext &context = runtime->getContext();
+	int taskId = context.getIntArgument(1);
+	const char *taskName = context.getStringArgument(2);
+	int preTaskId = context.getIntArgument(3);
+	int postTaskId = context.getIntArgument(4);
+	const char *awards = context.getStringArgument(5);
+	info("create task id: %d, name: %s, pre-task-id: %d, post-task-id: %d, awards: %s", taskId, taskName, preTaskId, postTaskId, awards);
+
+	Task task;
+	task.createGlobalTask(taskId, taskName, preTaskId, postTaskId, awards);
+	return 0;
+}
+
+int lua_create_instance(struct lua_State *L)
+{
+	return 0;
+}
+
+int lua_create_character(struct lua_State *L)
+{
+	return 0;
+}
+
+int lua_create_object(struct lua_State *L)
+{
+	return 0;
+}
+
+void init_task()
+{
+	Task task;
+	task.clearGlobal();
+	runtime->dexecute("Task.data.lua");
+}
+
+int lua_runtime_version()
+{
+	puts(LUA_VERSION);
+	puts(LUA_COPYRIGHT);
+	puts(LUA_AUTHORS);
+	return 0;
+}
+
+void init()
+{
+	///*
+	runtime = LuaRuntime::instance();
+	lua_runtime_version();
+	runtime->registerFunction("lua_create_task", lua_create_task);
+	runtime->registerFunction("lua_create_instance", lua_create_instance);
+	runtime->registerFunction("lua_create_character", lua_create_character);
+	runtime->registerFunction("lua_create_object", lua_create_object);
+	//*/
+	/*
+	LuaContext *luaContext = new LuaContext();
+	try
+	{
+		luaContext->dexecute("Task.data.lua");
+	}
+	catch (LuaException e)
+	{
+		info("fail to execute lua file %s, error %s(%d)", "TaskData.lua", e.getMessage(), e.getCode());
+		return;
+	}
+	//*/
+	
+	init_task();
+}
+
+int main(int argc, char **args) 
+{
+	init();
+    return 0;
+}

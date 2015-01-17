@@ -1,0 +1,54 @@
+DEBUG=../Debug
+
+PATH_VS=D:\usr\bin\Microsoft Visual Studio\VC98
+CL="$(PATH_VS)\Bin\cl.exe"
+LINK="$(PATH_VS)\Bin\link.exe"
+
+INCLUDE="D:\usr\bin\Microsoft Visual Studio\VC98\Include"
+LIB="D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+
+
+INCLUDE_LIB_LOG=D:\home\admin\workstation\c\liblog
+LIB_LIB_LOG=D:\home\admin\workstation\c\liblog\Debug
+
+INCLUDE_MYSQL=D:\usr\srv\mysql51\include
+LIB_MYSQL=D:\usr\srv\mysql51\lib\debug
+
+
+INCLUDE_LUA=D:\usr\bin\Lua\5.1\include
+LIB_LUA=D:\usr\bin\Lua\5.1\lib
+
+
+make: clean
+	$(CL) /GX /W3 /I $(INCLUDE) /c /Fo$(DEBUG)/ ../SQLException.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../Mysql.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../Connection.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../MysqlConnection.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../MysqlStatement.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../MysqlResultSet.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /I$(INCLUDE_MYSQL) /c /Fo$(DEBUG)/ ../Mysql.cpp
+
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LUA) /I$(INCLUDE_MYSQL) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../gs/Task.cpp
+
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LUA) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../gs/LuaException.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LUA) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../gs/LuaContext.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LUA) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../gs/LuaScriptExecutor.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LUA) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../gs/LuaRuntime.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /I$(INCLUDE_LUA) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../gs/data/DataBackendServer.cpp
+
+
+#	lib /nologo log.obj /out:./liblog.lib 
+	$(LINK) /LIBPATH:$(LIB) /LIBPATH:$(LIB_LIB_LOG) /LIBPATH:$(LIB_MYSQL) /LIBPATH:$(LIB_LUA) /OUT:$(DEBUG)/LuaRuntimeTest.exe $(DEBUG)/*.obj
+#	$(LINK) /DLL /LIBPATH:$(LIB) /OUT:$(DEBUG)/liblog.dll *.obj
+#	$(LINK) /DLL /LIBPATH:$(LIB) /OUT:$(DEBUG)/liblog.dll $(DEBUG)/*.obj
+# $(LINK) *.obj /LIBPATH:"D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+	cp ../liblog.dll $(DEBUG)/
+	cp ./test.lua $(DEBUG)/
+	cp ../gs/Task.data.lua .
+
+clean:
+	rm -Rf ./*.bak
+	rm -Rf ./*.o
+	rm -Rf ./*.obj
+	rm -Rf ./*.exe
+	rm -Rf ../Debug/*

@@ -1,0 +1,13 @@
+# Microsoft Developer Studio Generated Dependency File, included by HIB_SERVER.mak
+
+.\Server.cpp : \
+	"..\..\..\..\..\usr\bin\microsoft visual studio\vc98\include\basetsd.h"\
+	".\dllexport.h"\
+	".\log\log.h"\
+	".\Module.h"\
+	".\ModuleHTTP.h"\
+	".\ModuleTime.h"\
+	".\ModuleXMPP.h"\
+	".\net\sp.h"\
+	".\StdAfx.h"\
+	

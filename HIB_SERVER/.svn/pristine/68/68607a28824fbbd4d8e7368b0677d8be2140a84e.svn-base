@@ -1,0 +1,17 @@
+/*
+ *
+ *
+ * @author ada
+ * @version 1.0
+ * @since 1.0
+ */
+
+#ifndef DESTINATION
+#define DESTINATION
+class Destination
+{
+	public:
+		virtual char* getId() = 0;
+
+};
+#endif

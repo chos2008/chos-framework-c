@@ -1,0 +1,51 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: liblog_static - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP453.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /Fp"Debug/liblog_static.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+"D:\home\admin\workstation\c\liblog_static\StandardAppender.cpp"
+"D:\home\admin\workstation\c\liblog_static\AsynchronizedAppender.cpp"
+"D:\home\admin\workstation\c\liblog_static\FileAppender.cpp"
+"D:\home\admin\workstation\c\liblog_static\GenericAppender.cpp"
+"D:\home\admin\workstation\c\liblog_static\log.c"
+"D:\home\admin\workstation\c\liblog_static\LoggerWrapper.cpp"
+"D:\home\admin\workstation\c\liblog_static\SocketAppender.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP453.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP454.tmp" with contents
+[
+/nologo /out:"Debug\liblog_static.lib" 
+.\Debug\StandardAppender.obj
+.\Debug\Appender.obj
+.\Debug\AsynchronizedAppender.obj
+.\Debug\FileAppender.obj
+.\Debug\GenericAppender.obj
+.\Debug\log.obj
+.\Debug\LoggerWrapper.obj
+.\Debug\SocketAppender.obj
+]
+Creating command line "link.exe -lib @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP454.tmp"
+<h3>Output Window</h3>
+Compiling...
+StandardAppender.cpp
+AsynchronizedAppender.cpp
+FileAppender.cpp
+GenericAppender.cpp
+log.c
+LoggerWrapper.cpp
+SocketAppender.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+liblog_static.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

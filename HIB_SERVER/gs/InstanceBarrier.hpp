@@ -1,0 +1,36 @@
+#include "../AbstractLinkedBarrier.hpp"
+
+#if ! defined INSTANCE_BARRIER
+#define INSTANCE_BARRIER
+
+class InstanceBarrier : public AbstractLinkedBarrier 
+{
+
+private:
+	int idx;
+
+	char* name;
+
+	int level;
+
+	int instance;
+
+public:
+	InstanceBarrier();
+
+	InstanceBarrier(int idx, char* name, int level, int instance_idx);
+
+	int getIdx();
+
+	char* getName();
+
+	int getLevel();
+
+	int getInstance();
+
+	void clearGlobal();
+
+	void createGlobalBarrier(int idx, const char *barrierName, int level, int instance_index, const char *awards, const char *constraints, const char *storyline);
+};
+
+#endif

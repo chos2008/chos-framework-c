@@ -1,0 +1,52 @@
+#include <stdio.h>
+
+class SizeOfClass
+{
+
+public:
+	SizeOfClass() 
+	{
+		
+	}
+};
+
+struct sizeofstruct 
+{
+
+};
+
+void f1(char *s) 
+{
+	printf("sizeof(s): %d\n", sizeof(s));
+}
+
+void f2(char s[]) 
+{
+	printf("sizeof(s): %d\n", sizeof(s));
+}
+
+void f3(char s[20]) 
+{
+	printf("f3 sizeof(s): %d\n", sizeof(s));
+}
+
+int main() 
+{
+	SizeOfClass soc;
+	printf("sizeof(SizeOfClass): %d\n", sizeof(soc));
+
+	SizeOfClass *p_soc;
+	printf("sizeof(p_soc): %d\n", sizeof(p_soc));
+
+	char s[] = "abcdef";
+	printf("sizeof(s): %d\n", sizeof(s));
+	char *ps = s;
+	printf("sizeof(ps): %d\n", sizeof(ps));
+
+	f1(NULL);
+	f2(NULL);
+	f3(NULL);
+
+	printf("sizeof(struct sizeofstruct): %d\n", sizeof(struct sizeofstruct));
+	return 0;
+}

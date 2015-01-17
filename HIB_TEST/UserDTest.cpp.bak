@@ -1,0 +1,10 @@
+#include <stdio.h>
+
+void main()
+{
+#ifdef __CYG_WIN
+	printf("__CYG_WIN defined\n");
+#else 
+	printf("__CYG_WIN not defined\n");
+#endif
+}

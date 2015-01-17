@@ -1,0 +1,81 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: boost_1_34_0_serialization - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP215.tmp" with contents
+[
+/nologo /MLd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_MBCS" /D "_LIB" /Fp"Debug/boost_1_34_0_serialization.pch" /YX /Fo"Debug/" /Fd"Debug/" /FD /GZ  /c 
+"D:\home\admin\workstation\c\boost_1_34_0_serialization\utf8_codecvt_facet.cpp"
+"D:\home\admin\workstation\c\boost_1_34_0_serialization\xml_grammar.cpp"
+"D:\home\admin\workstation\c\boost_1_34_0_serialization\xml_iarchive.cpp"
+"D:\home\admin\workstation\c\boost_1_34_0_serialization\xml_wgrammar.cpp"
+"D:\home\admin\workstation\c\boost_1_34_0_serialization\xml_wiarchive.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP215.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP216.tmp" with contents
+[
+/nologo /out:"Debug\boost_1_34_0_serialization.lib" 
+.\Debug\xml_woarchive.obj
+.\Debug\basic_archive.obj
+.\Debug\basic_archive_impl.obj
+.\Debug\basic_iarchive.obj
+.\Debug\basic_iserializer.obj
+.\Debug\basic_oarchive.obj
+.\Debug\basic_oserializer.obj
+.\Debug\basic_pointer_iserializer.obj
+.\Debug\basic_pointer_oserializer.obj
+.\Debug\basic_serializer_map.obj
+.\Debug\basic_text_iprimitive.obj
+.\Debug\basic_text_oprimitive.obj
+.\Debug\basic_text_wiprimitive.obj
+.\Debug\basic_text_woprimitive.obj
+.\Debug\basic_xml_archive.obj
+.\Debug\binary_iarchive.obj
+.\Debug\binary_oarchive.obj
+.\Debug\binary_wiarchive.obj
+.\Debug\binary_woarchive.obj
+.\Debug\codecvt_null.obj
+.\Debug\extended_type_info.obj
+.\Debug\extended_type_info_no_rtti.obj
+.\Debug\extended_type_info_typeid.obj
+.\Debug\polymorphic_iarchive.obj
+.\Debug\polymorphic_oarchive.obj
+.\Debug\stl_port.obj
+.\Debug\text_iarchive.obj
+.\Debug\text_oarchive.obj
+.\Debug\text_wiarchive.obj
+.\Debug\text_woarchive.obj
+.\Debug\utf8_codecvt_facet.obj
+.\Debug\void_cast.obj
+.\Debug\xml_grammar.obj
+.\Debug\xml_iarchive.obj
+.\Debug\xml_oarchive.obj
+.\Debug\xml_wgrammar.obj
+.\Debug\xml_wiarchive.obj
+]
+Creating command line "link.exe -lib @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP216.tmp"
+<h3>Output Window</h3>
+Compiling...
+utf8_codecvt_facet.cpp
+d:\home\admin\workstation\c\boost_1_34_0_serialization\utf8_codecvt_facet.cpp(15) : fatal error C1083: Cannot open include file: '../../detail/utf8_codecvt_facet.cpp': No such file or directory
+xml_grammar.cpp
+e:\usr\lib\boost\boost_1_34_0_headers\boost\spirit\core\config.hpp(58) : fatal error C1189: #error :  "Compiler not supported. See note in <boost/spirit/core/config.hpp>"
+xml_iarchive.cpp
+e:\usr\lib\boost\boost_1_34_0_headers\boost\spirit\core\config.hpp(58) : fatal error C1189: #error :  "Compiler not supported. See note in <boost/spirit/core/config.hpp>"
+xml_wgrammar.cpp
+e:\usr\lib\boost\boost_1_34_0_headers\boost\spirit\core\config.hpp(58) : fatal error C1189: #error :  "Compiler not supported. See note in <boost/spirit/core/config.hpp>"
+xml_wiarchive.cpp
+e:\usr\lib\boost\boost_1_34_0_headers\boost\spirit\core\config.hpp(58) : fatal error C1189: #error :  "Compiler not supported. See note in <boost/spirit/core/config.hpp>"
+Ö´ÐÐ cl.exe Ê±³ö´í.
+
+
+
+<h3>Results</h3>
+boost_1_34_0_serialization.lib - 1 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -1,0 +1,59 @@
+DEBUG=../Debug
+PATH_VS=D:\usr\bin\Microsoft Visual Studio\VC98
+CL="$(PATH_VS)\Bin\cl.exe"
+LINK="$(PATH_VS)\Bin\link.exe"
+
+INCLUDE="D:\usr\bin\Microsoft Visual Studio\VC98\Include"
+LIB="D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+INCLUDE_LIB_LOG=D:\home\admin\workstation\c\liblog
+LIB_LIB_LOG=D:\home\admin\workstation\c\liblog\Debug
+
+INCLUDE_MYSQL=D:\usr\srv\mysql51\include
+LIB_MYSQL=D:\usr\srv\mysql51\lib\debug
+
+
+INCLUDE_LUA=D:\usr\bin\Lua\5.1\include
+LIB_LUA=D:\usr\bin\Lua\5.1\lib
+
+
+liblog.lib: clean 
+ 
+# using compiler preprocessor options(PREPROCESSOR) /D to define user defined macro GLOBAL_START_ROUTINE, If compiles 
+# global start routine edition of Thread
+#     DWORD __stdcall execute(LPVOID args);
+#     
+#     DWORD execute(LPVOID args) {
+#         Thread* t = (Thread *) args;
+#         t->run();
+#         return 1;
+#     }
+# 
+# else do not using compiler preprocessor options(PREPROCESSOR) /D to define user defined macro GLOBAL_START_ROUTINE, 
+# compiles local start routine edition of Thread
+#     static DWORD __stdcall execute(LPVOID args); 
+#
+#     DWORD __stdcall Thread::execute(LPVOID args)
+#     {
+#         Thread* t = (Thread *) args;
+#         t->run();
+#         return 1;
+#     }
+	$(CL) /GX /W3 /DGLOBAL_START_ROUTINE /I $(INCLUDE) /I$(INCLUDE_LIB_LOG) /c /Fo$(DEBUG)/ ../Thread.cpp
+	$(CL) /GX /W3 /I $(INCLUDE) /c /Fo$(DEBUG)/ ThreadTest.cpp
+#	$(CL) /GX /W3 /I $(INCLUDE) /c StdAfx.cpp
+#	$(CL) /GX /W3 /I $(INCLUDE) /c *.cpp
+#	$(CL) /GX /W3 /I $(INCLUDE) /c /Fo$(DEBUG)/ *.cpp
+
+#	lib /nologo log.obj /out:./liblog.lib 
+	$(LINK) /LIBPATH:$(LIB) /LIBPATH:$(LIB_MYSQL) /LIBPATH:$(LIB_LUA) /LIBPATH:$(LIB_LIB_LOG)  /OUT:$(DEBUG)/ThreadTest.exe $(DEBUG)/*.obj
+#	$(LINK) /DLL /LIBPATH:$(LIB) /OUT:$(DEBUG)/liblog.dll *.obj
+#	$(LINK) /DLL /LIBPATH:$(LIB) /OUT:$(DEBUG)/liblog.dll $(DEBUG)/*.obj
+# $(LINK) *.obj /LIBPATH:"D:\usr\bin\Microsoft Visual Studio\VC98\Lib"
+	cp ../liblog.dll $(DEBUG)/
+
+clean:
+	rm -Rf ./*.bak
+	rm -Rf ./*.o
+	rm -Rf ./*.obj
+	rm -Rf ./*.exe
+	rm -Rf ../Debug/*

@@ -1,0 +1,320 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <poll.h>
+#include <sys/time.h>
+#include <netinet/in.h>
+#include <errno.h>
+#include <unistd.h>
+
+#define PORT 6002
+
+//最多处理的connect
+#define BACKLOG 5
+
+//当前的连接数
+int currentClient = 0;
+
+//数据接受 buf
+#define REVLEN 10
+char recvBuf[REVLEN];
+
+#define OPEN_MAX 1024
+
+
+struct pollfd* _fd_init(struct pollfd* const fd_set) 
+{
+	struct pollfd *poll_fd_set;
+	if (fd_set == NULL)
+	{
+		poll_fd_set = (struct pollfd *) malloc(OPEN_MAX * sizeof(struct pollfd));
+	}
+	else 
+	{
+		poll_fd_set = fd_set;
+	}
+	return poll_fd_set;
+}
+
+void _fd_zero(struct pollfd* fd_set) 
+{
+    for(int i = 0; i < OPEN_MAX; i++)
+    {
+        fd_set[i].fd = -1;
+    }
+}
+
+void _fd_set(int fd, struct pollfd* const fd_set) 
+{
+	fd_set[0].fd = fd;
+    fd_set[0].events = POLLIN; //POLLRDNORM;	
+}
+
+
+class SocketException 
+{
+	private:
+
+		int errorCode;
+
+		char *message;
+
+	public:
+
+		SocketException(int errorCode) 
+		{
+			this->errorCode = errorCode;
+			this->message = NULL;
+		}
+
+		SocketException(int errorCode, char *message) 
+		{
+			this->errorCode = errorCode;
+			this->message = message;
+		}
+
+		int getCode() 
+		{
+			return errorCode;
+		}
+
+		char* getMessage() 
+		{
+			return message;
+		}
+};
+
+class HardSocket 
+{
+	private: 
+
+		int sfd;
+
+	public:
+
+		HardSocket() throw (SocketException)
+		{
+			/**
+			 * On success, a file descriptor for the new socket is returned.  On 
+			 * error, -1 is returned, and errno is set appropriately.
+			 */
+			int fd = socket(AF_INET, SOCK_STREAM, 0);
+			//fd = -1;
+			if (fd == -1)
+			{
+				int error = errno;
+				throw SocketException(error);
+			} 
+			this->sfd = fd;
+		}
+
+		~HardSocket() 
+		{
+			printf("~HardSocket\n");	
+		}
+
+		int getPlainSocket() 
+		{
+			return this->sfd;
+		}
+
+		void bind(int port) throw (SocketException)
+		{
+			struct sockaddr_in server_addr;
+			bzero(&server_addr, sizeof(server_addr));
+			server_addr.sin_family  =  AF_INET;
+			server_addr.sin_port = htons(port);
+			server_addr.sin_addr.s_addr = htonl(INADDR_ANY);
+
+			int error = ::bind(this->sfd, (struct sockaddr*) &server_addr, sizeof(server_addr));
+			if(error == -1) 
+			{
+				error = errno;
+				throw SocketException(error);
+			}
+		}
+
+		void listen() throw (SocketException)
+		{
+			this->listen(50);
+		}
+
+		void listen(int backlog) throw (SocketException)
+		{
+			int error = ::listen(this->sfd, backlog);
+			if(error == -1) 
+			{
+				error = errno;
+				throw SocketException(error);
+			}
+		}
+};
+
+
+class Poll
+{
+
+};
+
+
+int main()
+{
+	HardSocket *socket = NULL;
+	try
+	{
+		socket = new HardSocket();	
+		socket->bind(PORT);
+		socket->listen();
+	}
+	catch (SocketException e)
+	{
+		printf("socket error %d\n", e.getCode());
+		// 有问题， 这里实例化一个socket对象时抛出异常的话， 析构函数不会被调用以释放对象资源
+		//sleep(5000);
+		return 1;
+	}
+
+	/**
+	 * struct pollfd {
+     *     int   fd;         // file descriptor 
+     *     short events;     // requested events 
+     *     short revents;    // returned events 
+     * };
+	 */
+	struct pollfd clientfd[OPEN_MAX];
+	_fd_zero(clientfd);
+	_fd_set(socket->getPlainSocket(), clientfd);
+
+	int nfds = 0;
+	while(1) 
+	{
+        int timeout = 3000;
+        int error = poll(clientfd, nfds+1, timeout);
+
+        if(error < 0) // On error, -1 is returned, and errno is set appropriately.
+        {
+            printf("select error %d\n", errno);
+            break;
+        }
+        else if(error == 0) // A value of 0 indicates that the call timed out and no file descriptors were ready.
+        {
+            printf("timeout ...\n");  
+            continue;  
+        }
+
+        for(int i = 0; i <= nfds; i++)  
+        {  
+            if(clientfd[i].fd < 0) 
+			{
+                continue;
+			}
+
+			if (clientfd[i].fd == socket->getPlainSocket())
+			{
+				/**
+				 * Case indicates that one event that data to read (POLLIN or POLLRDNORM) contained.
+				 * 
+				 * // The following values are defined by XPG4. 
+				 * #define POLLRDNORM POLLIN
+				 */
+				if (clientfd[i].revents & POLLIN) 
+				{
+					printf("clientfd[%d].revents & POLLIN %d(0x%x) clientfd[%d].revents %d(0x%x), POLLIN %d(0x%x)\n", 
+						i, 
+						clientfd[i].revents & POLLIN, 
+						clientfd[i].revents & POLLIN, 
+						i, 
+						clientfd[i].revents, 
+						clientfd[i].revents, 
+						POLLIN, 
+						POLLIN);
+				
+					int sockSvr = accept(socket->getPlainSocket(), NULL, NULL);//(struct sockaddr*)&client_addr
+					if(sockSvr == -1)  
+					{
+						printf("accpet error\n");  
+					}
+					else  
+					{
+						currentClient++;  
+					}
+
+					for(i=0; i<OPEN_MAX; i++)  
+					{
+						if(clientfd[i].fd<0)  
+						{
+							clientfd[i].fd = sockSvr;  
+							break;  
+						}
+					}
+					if(i == OPEN_MAX) 
+					{
+						printf("too many connects\n");  
+						return -1;  
+					}
+					clientfd[i].events = POLLIN;//POLLRDNORM;  
+					if(i > nfds) 
+					{
+						nfds = i;
+					}
+				}
+            }
+			else if (clientfd[i].revents & (POLLIN | POLLERR)) // POLLRDNORM  
+            {
+				printf("clientfd[%d].revents & (POLLIN | POLLERR) %d(0x%x) clientfd[%d].revents %d(0x%x), POLLIN %d(0x%x), POLLERR %d(0x%x)\n", 
+					i, 
+					clientfd[i].revents & (POLLIN | POLLERR), 
+					clientfd[i].revents & (POLLIN | POLLERR), 
+					i, 
+					clientfd[i].revents, 
+					clientfd[i].revents, 
+					POLLIN, 
+					POLLIN, 
+					POLLERR, 
+					POLLERR);
+				int recvLen = 0;
+                if(recvLen != REVLEN)  
+                {
+                    while(1)  
+                    {
+						printf("recv....\n");
+                        //recv数据
+                        int bytes = recv(clientfd[i].fd, (char *) recvBuf+recvLen, REVLEN - recvLen, 0);
+                        if(bytes == 0) 
+                        {
+							printf("stream socket %d peer has performed an orderly shutdown\n", clientfd[i].fd);
+                            clientfd[i].fd = -1;
+                            recvLen = 0;
+                            break;
+                        }  
+                        else if(bytes == -1) 
+                        {
+							printf("receive a message from a socket error %d\n", errno);
+                            clientfd[i].fd = -1;
+                            recvLen = 0;
+                            break;
+                        }
+                        //数据接受正常  
+                        recvLen = recvLen + bytes;
+                        if(recvLen < REVLEN) 
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            //数据接受完毕  
+                            printf("buf = %s\n",  recvBuf);
+                            //close(client[i].fd);
+                            //client[i].fd = -1;
+                            recvLen = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return 0;
+}

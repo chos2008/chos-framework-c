@@ -1,0 +1,15 @@
+#include "DataType.h"
+
+class INTEGER : public DataType {
+public: 
+	INTEGER() {}
+	INTEGER(string type, int size) {
+		maxSize = 65535;
+		minSize = -65536;
+	}
+	int maxSize;
+	int minSize;
+}
+
+typedef INTEGER integer;
+typedef INTEGER INT;

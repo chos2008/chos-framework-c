@@ -1,0 +1,215 @@
+#include <stdlib.h>
+#include <windows.h>
+#include <stdio.h>
+#include <string>
+using namespace std;
+
+#include "log.h"
+#include "../../csocket.h"
+#include "Socket.h"
+
+const int Socket::CLOSED = 0x1234;
+
+Socket::Socket()
+{
+	this->closed = 0;
+	this->inputStream.setSocket(this);
+	this->outputStream.setSocket(this);
+	printf("socket constructed\n");
+}
+
+Socket::Socket(socket_t socket) 
+{
+	this->socket = socket;
+	this->closed = 0;
+	/*
+	try
+	{
+		this->inputStream = new SocketInputStream(this);
+		this->outputStream = new SocketOutputStream(this);
+	}
+	catch(bad_alloc &e)
+	{
+		//失败以后，要么abort要么重分配
+		error("\nbad_alloc++++++++++++++++++++++%s\n", e.what());
+		this->inputStream = NULL;
+		this->outputStream = NULL;
+	}
+	*/
+	this->inputStream.setSocket(this);
+	this->outputStream.setSocket(this);
+}
+
+Socket::~Socket()
+{
+	this->close();
+	/*
+	if (this->inputStream) 
+	{
+		delete this->inputStream;
+		this->inputStream = NULL;
+		delete this->outputStream;
+		this->outputStream = NULL;
+	}
+	*/
+	debug("~Socket");
+}
+
+void Socket::startup() throw (SocketException)
+{
+    ///*
+    WSAData wsaData;
+	WORD socketVersion = MAKEWORD(2, 2);
+
+	/*
+	string log = "Loading Socket Library, Version ";
+	char* c = (char *) malloc(2 * sizeof(char));
+	itoa(socketVersion, c, 10);
+	log = log + c;
+	log = log + "\n";
+	//printf("%s Loading Socket Library, Version %i\n", logdate(), socketVersion);
+	logdebug(log.c_str());
+	*/
+	debug("Loading Socket Library, Version %d", socketVersion);
+
+	int error = WSAStartup(socketVersion, &wsaData);
+	if (error) {
+		throw SocketException(error);
+	}
+	
+	/*
+	log = "Loaded Socket Library, Version ";
+	c = (char *) malloc(2 * sizeof(char));
+	itoa(socketVersion, c, 10);
+	log = log + c;
+	log = log + "                         [OK]\n";
+	//char* logDate = logdate();
+	//printf("%s Loaded Socket Library, Version %i                          [OK]\n", logDate, socketVersion);
+	logdebug(log.c_str());
+	*/
+	debug("Loaded Socket Library, Version %d                         [OK]", socketVersion);
+	//*/
+}
+
+void Socket::init(int af, int type, int protocol) throw (SocketException) 
+{
+	startup();
+	this->socket = ::socket(af, type, protocol);
+	if (this->socket == INVALID_SOCKET) 
+	{
+		int error = WSAGetLastError();
+		throw SocketException(error);
+	}
+	logdebug("Create Socket                                              [OK]");
+	this->closed = 0;
+}
+
+char* Socket::getInetAddressAsString()
+{
+	return inet_ntoa(this->addr.sin_addr);
+}
+
+sockaddr_in Socket::getInetAddress()
+{
+	return this->addr;
+}
+
+int Socket::getPort()
+{
+	return ::ntohs(this->addr.sin_port);
+}
+
+socket_t Socket::getPlainSocket() 
+{
+	return this->socket;
+}
+
+
+SocketInputStream* Socket::getInputStream() 
+{
+	return &inputStream;
+}
+
+SocketOutputStream* Socket::getOutputStream() 
+{
+	return &outputStream;
+}
+
+
+void Socket::setSocketOption(int level, int optionName, const char *optionValue, int optionLength) throw (SocketException)
+{
+	int error = setsockopt(this->socket, level, optionName, optionValue, optionLength);
+    if (error) 
+	{
+	    error = WSAGetLastError();
+		throw SocketException(error);
+	}
+}
+
+void Socket::setReadTimeOut(int timeout) throw (SocketException)
+{
+	DWORD value = (DWORD) timeout;
+	this->setSocketOption(SOL_SOCKET, 
+		SO_RCVTIMEO, (char *) &value, sizeof(DWORD));
+}
+
+
+void Socket::setWriteTimeOut(int timeout) throw (SocketException)
+{
+	DWORD value = (DWORD) timeout;
+	this->setSocketOption(SOL_SOCKET, 
+		SO_SNDTIMEO, (char *) &value, sizeof(DWORD));
+}
+
+int Socket::getNonBlocking()
+{
+	return this->nonblocking;
+}
+
+void Socket::setNonBlocking() throw (SocketException)
+{
+	unsigned long ul = 1;
+    int error = ioctlsocket(this->socket, FIONBIO, (unsigned long*) &ul);
+    if (error == SOCKET_ERROR)
+    {
+        error = WSAGetLastError();
+        throw SocketException(error);
+    }
+	this->nonblocking = (unsigned int) ul;
+	debug("Socket working under non-blocking mode");
+}
+
+/**
+ * Close socket
+ * <p>
+ * Call function closesocket(iSocket) to close the opened socket.
+ * <p> 
+ * int closesocket(
+ *     _In_  SOCKET s
+ * );
+ */
+void Socket::close() throw (SocketException)
+{
+	socket_t socket = getPlainSocket();
+	if (this->closed) 
+	{
+		debug("socket#%d bind on %s:%d already closed", socket, this->getInetAddressAsString(), this->getPort());
+		return;
+	}
+
+	debug("closing socket#%d", socket);
+	int error = closesocket(socket);
+	if (error == SOCKET_ERROR) 
+	{
+	    error = WSAGetLastError();
+		warn("close socket error %d", error);
+		throw SocketException(error);
+	}
+	this->closed = 1;
+	debug("Socket#%d closed", socket);
+}
+
+int Socket::isClose()
+{
+	return this->closed;
+}

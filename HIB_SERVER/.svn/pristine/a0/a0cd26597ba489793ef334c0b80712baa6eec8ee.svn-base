@@ -1,0 +1,11 @@
+#include "DataType.h"
+
+class VARCHAR : public DataType {
+public: 
+	VARCHAR() {}
+	VARCHAR(string type, int maxLength) {
+		maxLen = maxLength;
+	}
+
+	int maxLen;
+}

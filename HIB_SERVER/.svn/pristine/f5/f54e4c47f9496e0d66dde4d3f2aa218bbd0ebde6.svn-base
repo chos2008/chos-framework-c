@@ -1,0 +1,12 @@
+#if ! defined __TASK
+#define __TASK
+class Task
+{
+	private:
+
+	public:
+		void clearGlobal();
+
+		void createGlobalTask(int taskId, const char *taskName, int preTaskId, int postTaskId, const char *awards);
+};
+#endif
